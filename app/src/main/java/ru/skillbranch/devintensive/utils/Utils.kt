@@ -1,7 +1,10 @@
 package ru.skillbranch.devintensive.utils
 
+import android.content.Context
+import kotlin.math.roundToInt
+
 object Utils {
-    fun parseFullName(fullName: String?): Pair<String?, String?> {
+    fun parseFullName(fullName: String?): Pair<String?, String?>{
         val parts = fullName?.trim()?.split(" ")
         val firstName = parts?.getOrNull(0)?.ifEmpty { null }
         val lastName = parts?.getOrNull(1)?.ifEmpty { null }
@@ -20,7 +23,7 @@ object Utils {
     }
 
     private fun getTranslChar(char: Char, map: HashMap<Char, String>): String {
-        val transl = map[char.toLowerCase()] ?: char.toString()
+        val transl  = map[char.toLowerCase()] ?: char.toString()
 
         return if (char.isUpperCase() && transl.isNotEmpty())
             transl.capitalize()
@@ -74,4 +77,15 @@ object Utils {
         return "$firstInit$secondInit".ifEmpty { null }
     }
 
+    fun convertPxToDp(context: Context, px: Int): Int {
+        return (px / context.resources.displayMetrics.density).roundToInt()
+    }
+
+    fun convertDpToPx(context: Context, dp: Float): Int {
+        return (dp * context.resources.displayMetrics.density).roundToInt()
+    }
+
+    fun convertSpToPx(context: Context, sp: Int): Int {
+        return sp * context.resources.displayMetrics.scaledDensity.roundToInt()
+    }
 }
